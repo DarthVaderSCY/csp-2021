@@ -8,7 +8,7 @@
 
 怎么定位一个tuple？Table name + primary key
 
-##### <img src="./images/relational model summary.png" alt="relational model summary" style="zoom:40%;" />
+##### <img src="./images/07&08//relational model summary.png" alt="relational model summary" style="zoom:40%;" />
 
 ### DML （Data Manipulation Languages）
 
@@ -32,7 +32,7 @@
 
 **关系模型和文档模型对比**
 
-##### <img src="./images/relational and document model.png" alt="relational and document model" style="zoom: 40%;" />
+##### <img src="./images/07&08//relational and document model.png" alt="relational and document model" style="zoom: 40%;" />
 
 ### OldSQL → NoSQL → NewSQL → HTAP
 
@@ -44,7 +44,7 @@
   - 生命周期短
   - 需要的数据量小
 
-##### <img src="./images/oldSQL.png" alt="oldSQL" style="zoom: 40%;" />
+##### <img src="./images/07&08//oldSQL.png" alt="oldSQL" style="zoom: 40%;" />
 
 #### NoSQL（p91）
 
@@ -61,7 +61,7 @@
 - 简化数据模型 => 降低复杂度
 - 弱化transaction，异步复制 => 牺牲一致性，换取scalability和availability
 
-##### <img src="./images/NoSQL.png" alt="NoSQL" style="zoom: 40%;" />
+##### <img src="./images/07&08//NoSQL.png" alt="NoSQL" style="zoom: 40%;" />
 
 #### NewSQL（p105）
 
@@ -74,7 +74,7 @@
 
 - **Shared-nothing Partitioning**
 
-##### <img src="./images/NewSQL.png" alt="NewSQL" style="zoom:40%;" />
+##### <img src="./images/07&08//NewSQL.png" alt="NewSQL" style="zoom:40%;" />
 
 #### HTAP(Hybrid Transactional/Analytical Processing)（p131）
 
@@ -84,7 +84,7 @@
 
 ##### L1 Lightning（p137-140）
 
-##### <img src="images/HTAP1.png" alt="HTAP1" style="zoom:50%;" /><img src="images/HTAP2.png" alt="HTAP2" style="zoom:40%;" />
+##### <img src="./images/07&08/HTAP1.png" alt="HTAP1" style="zoom:50%;" /><img src="./images/07&08/HTAP2.png" alt="HTAP2" style="zoom:40%;" />
 
 
 
@@ -117,13 +117,13 @@
 
 - **Two-phase locking** 2PL：TX commit之后再放所有的锁 -> **保证Serializability**
 
-##### <img src="./images/Two-phase lock.png" alt="Two-phase lock" style="zoom:40%;" />
+##### <img src="./images/07&08//Two-phase lock.png" alt="Two-phase lock" style="zoom:40%;" />
 
 ##### 2PL的问题——deadlock（p61）
 
 ##### 解决方法：
 
-##### <img src="./images/resolve deadlock.png" alt="resolve deadlock" style="zoom:40%;" />
+##### <img src="./images/07&08//resolve deadlock.png" alt="resolve deadlock" style="zoom:40%;" />
 
 ### Optimistic concurrency control -- OCC（p67）
 
@@ -131,7 +131,7 @@
 - Checks the **results of TX** before it commits
   - If violate serializability, then **aborts & retries**
 
-##### <img src="./images/OCC.png" alt="OCC" style="zoom:40%;" />
+##### <img src="./images/07&08//OCC.png" alt="OCC" style="zoom:40%;" />
 
 ##### **具体例子（p69-80）**
 
@@ -145,6 +145,35 @@
 - False Aborts 错误的abort
 - livelock：high contention情况下，一直abort，没有progress
 
-##### <img src="./images/summary-serializability.png" alt="summary-serializability" style="zoom:50%;" />
+##### <img src="./images/07&08//summary-serializability.png" alt="summary-serializability" style="zoom:50%;" />
 
 ### Modern Transaction  Systems（p89）
+
+#### HTM（p92）
+
+#### intel RTM（p96）
+
+##### <img src="./images/07&08//RTM.png" alt="RTM" style="zoom:50%;" />
+
+**Hardware support for transactional memory总结**
+
+- Easy programming model for the programmer
+- Good performance if using properly
+- However, the programmer should handle its pitfalls
+
+#### DBX（p111）
+
+a TX system to use **RTM for acceleration**, but **avoids its pitfalls** for TXs
+
+##### <img src="./images/07&08//DBX.png" alt="DBX" style="zoom:40%;" />
+
+#### ROCOCO（p135）
+
+**回顾：优化TX的方向？Improve the TX algorithms properties**
+
+- E.g., better deadlock detection algorithms in 2PL
+- E.g., reduce aborts in OCC
+
+##### <img src="./images/07&08//ROCOCO1.png" alt="ROCOCO1" style="zoom:40%;" />
+
+##### <img src="./images/07&08//ROCOCO2.png" alt="ROCOCO2" style="zoom:40%;" />
