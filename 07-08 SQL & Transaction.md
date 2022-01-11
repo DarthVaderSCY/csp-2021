@@ -84,4 +84,67 @@
 
 ##### L1 Lightning（p137-140）
 
-##### <img src="images/HTAP1.png" alt="HTAP1" style="zoom:60%;" /><img src="images/HTAP2.png" alt="HTAP2" style="zoom:50%;" />
+##### <img src="images/HTAP1.png" alt="HTAP1" style="zoom:50%;" /><img src="images/HTAP2.png" alt="HTAP2" style="zoom:40%;" />
+
+
+
+# 08 Transactions
+
+- **Atomicity**: TX is either performed entirety or not performed at all. **(rollback回滚)**
+
+- **Cosistency**: Transaction must change the data from a consistent state to another
+
+- **Isolation**: Two concurrently executed transactions are isolated from each other
+
+- **Durability**: Once a transaction is committed, its changes must durably stored to a persistent storage
+
+如何保证？**（p28）**
+
+- **I：一致性控制方法**
+
+### Serializability（p31）
+
+- 是理想化的：**并发事务T1,T2,...,TN好像是按顺序执行的一样**
+
+- 如何检查是不是serializability？replay the concurrent execution to a serial of reads/writes（**例子p35-42**）
+
+#### Serializability的实现（p45）
+
+##### 使用锁lock
+
+- 全局锁global lock：一次只能一个TX， 不并发（性能差）
+- 简单细粒度锁simple fine-grained lock：每个record有一个锁（锁容易放太早，不正确）
+
+- **Two-phase locking** 2PL：TX commit之后再放所有的锁 -> **保证Serializability**
+
+##### <img src="./images/Two-phase lock.png" alt="Two-phase lock" style="zoom:40%;" />
+
+##### 2PL的问题——deadlock（p61）
+
+##### 解决方法：
+
+##### <img src="./images/resolve deadlock.png" alt="resolve deadlock" style="zoom:40%;" />
+
+### Optimistic concurrency control -- OCC（p67）
+
+- Executing TXs **optimistically** w/o acquiring the lock
+- Checks the **results of TX** before it commits
+  - If violate serializability, then **aborts & retries**
+
+##### <img src="./images/OCC.png" alt="OCC" style="zoom:40%;" />
+
+##### **具体例子（p69-80）**
+
+##### 好处：
+
+- phase1: Operates in **private** workspace;  **rare inter-thread**  synchronization (optimistic)
+- phase2, 3: Needs synchronization, but usually very **short at low contention**
+
+##### 问题：
+
+- False Aborts 错误的abort
+- livelock：high contention情况下，一直abort，没有progress
+
+##### <img src="./images/summary-serializability.png" alt="summary-serializability" style="zoom:50%;" />
+
+### Modern Transaction  Systems（p89）
